@@ -1,0 +1,3 @@
+- Windows 11 の Visual Studio 2026 の `x64 Native Tools Command Prompt for VS` の中からAIコーディングエージェントの OpenCode を使用しています。
+- コメントは日本語で書いてください。
+- ユーザーへの応答は日本語で返してください。
