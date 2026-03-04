@@ -75,7 +75,7 @@ namespace WhisperSpeechRecognition.Services
             string? wavFilePath = _audioRecorder.StopRecording();
             if (wavFilePath != null)
             {
-                // ToDo: Step 4でOpenAI APIにこのファイルを渡す
+                // ToDo: Step 5でOpenAIServiceを呼び出し処理する
                 Console.WriteLine($"録音完了: {wavFilePath}");
             }
         }
