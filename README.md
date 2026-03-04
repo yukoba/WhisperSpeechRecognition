@@ -2,8 +2,9 @@
 OpenAI の Whisper を使用して音声認識を行い、GPT-5 mini を使用して「えっと」などを除去して、クリップボードに認識結果をコピーします。
 
 https://github.com/yukoba/WhisperSpeechRecognition/releases からインストールしてください。
+https://dotnet.microsoft.com/ja-jp/download/dotnet/10.0 から .NET 10 デスクトップ ランタイム のインストールも必要です。
 
-インストールすると、スタートメニューに緑のマイクアイコンの WhisperVoiceRecoginition が追加になるので、起動すると、タスクトレイに常駐します。
+インストールすると、スタートメニューに緑のマイクアイコンの Whisper Speech Recoginition が追加になるので、起動すると、タスクトレイに常駐します。
 `Ctrl + Shift + スペース` を押すと、録音が始まり、もう一度 `Ctrl + Shift + スペース` を押すと認識が終了します。
 認識結果はクリップボードにコピーされます。
 
@@ -25,6 +26,8 @@ OpenAI を使用しているので API キーは https://platform.openai.com/api
 
 ## インストーラーの作成方法
 ```
+wix extension add -g WixToolset.Netfx.wixext/6.0.2
+
 dotnet publish -c Release --property:Platform="Any CPU" -o publish
-wix build Package.wxs -o WhisperSpeechRecognition.msi
+wix build -ext WixToolset.Netfx.wixext -o WhisperSpeechRecognition.msi Package.wxs
 ```

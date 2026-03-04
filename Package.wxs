@@ -1,9 +1,21 @@
-<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-  <Package Name="WhisperSpeechRecognition" Manufacturer="YuKobayashi" Version="1.0.0.0" UpgradeCode="7C41BEBD-0763-4844-8F49-BF5995E1D816" Scope="perMachine">
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:netfx="http://wixtoolset.org/schemas/v4/wxs/netfx">
+  <Package Name="Whisper Speech Recognition" Manufacturer="YuKobayashi" Version="1.0.0.0" UpgradeCode="7C41BEBD-0763-4844-8F49-BF5995E1D816" Scope="perMachine">
     <MediaTemplate EmbedCab="yes" />
 
     <!-- 古いバージョンの自動削除やダウングレード防止設定 -->
-    <MajorUpgrade DowngradeErrorMessage="より新しいバージョンの WhisperSpeechRecognition が既にインストールされています。" />
+    <MajorUpgrade DowngradeErrorMessage="より新しいバージョンの Whisper Speech Recognition が既にインストールされています。" />
+
+    <!-- .NET 10 (Desktop Runtime x64) のインストール状態をチェック -->
+    <netfx:DotNetCompatibilityCheck
+        Property="DOTNET10STATUS"
+        RollForward="latestMajor"
+        RuntimeType="desktop"
+        Version="10.0.0"
+        Platform="x64" />
+
+    <!-- インストールされていない場合 (チェック結果が 0 以外の場合) にブロック -->
+    <Launch Condition="Installed OR DOTNET10STATUS = &quot;0&quot;"
+            Message="このアプリケーションをインストールするには、Microsoft .NET 10 Desktop Runtime (x64) が必要です。" />
 
     <StandardDirectory Id="ProgramFiles64Folder">
       <Directory Id="INSTALLFOLDER" Name="WhisperSpeechRecognition" />
@@ -19,8 +31,8 @@
 
     <Component Id="ApplicationShortcut" Directory="ApplicationProgramsFolder" Guid="*">
       <Shortcut Id="ApplicationStartMenuShortcut"
-                Name="WhisperSpeechRecognition"
-                Description="Start WhisperSpeechRecognition"
+                Name="Whisper Speech Recognition"
+                Description="Start Whisper Speech Recognition"
                 Target="[INSTALLFOLDER]WhisperSpeechRecognition.exe"
                 WorkingDirectory="INSTALLFOLDER"/>
       <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
