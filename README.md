@@ -1,12 +1,16 @@
 # Windows音声認識アプリ
 OpenAI の Whisper を使用して音声認識を行い、GPT-5 mini を使用して「えっと」などを除去して、クリップボードに認識結果をコピーします。
 
-https://github.com/yukoba/WhisperSpeechRecognition/releases からインストールしてください。
-https://dotnet.microsoft.com/ja-jp/download/dotnet/10.0 から .NET 10 デスクトップ ランタイム のインストールも必要です。
-
+## 使用方法
 インストールすると、スタートメニューに緑のマイクアイコンの Whisper Speech Recoginition が追加になるので、起動すると、タスクトレイに常駐します。
 `Ctrl + Shift + スペース` を押すと、録音が始まり、もう一度 `Ctrl + Shift + スペース` を押すと認識が終了します。
 認識結果はクリップボードにコピーされます。
+
+タスクトレイのアイコンを右クリックすると終了できます。
+
+## インストール方法
+https://github.com/yukoba/WhisperSpeechRecognition/releases からインストールしてください。
+https://dotnet.microsoft.com/ja-jp/download/dotnet/10.0 から .NET デスクトップ ランタイム 10 のインストールも必要です。
 
 OpenAI を使用しているので API キーは https://platform.openai.com/api-keys から作成してください。
 その API キーを環境変数 OPENAI_API_KEY に書くか、もしくは、以下の内容で `%USERPROFILE%\WhisperSpeechRecognition.json` に書いてください。
@@ -19,15 +23,13 @@ OpenAI を使用しているので API キーは https://platform.openai.com/api
 }
 ```
 
-タスクトレイのアイコンを右クリックすると終了できます。
-
 ## ライセンス
 アイコンは https://www.flaticon.com/free-icon/circle_14025057 より。ソースコードはMITライセンスです。
 
 ## インストーラーの作成方法
 ```
-wix extension add -g WixToolset.Netfx.wixext/6.0.2
+wix.exe extension add -g WixToolset.Netfx.wixext/6.0.2
 
-dotnet publish -c Release --property:Platform="Any CPU" -o publish
-wix build -ext WixToolset.Netfx.wixext -o WhisperSpeechRecognition.msi Package.wxs
+dotnet.exe publish -c Release --property:Platform="Any CPU" -o publish
+wix.exe build -ext WixToolset.Netfx.wixext -o WhisperSpeechRecognition.msi Package.wxs
 ```
