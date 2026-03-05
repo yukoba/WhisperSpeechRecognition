@@ -30,6 +30,6 @@ OpenAI を使用しているので API キーは https://platform.openai.com/api
 ```
 wix.exe extension add -g WixToolset.Netfx.wixext/6.0.2
 
-dotnet.exe publish -c Release --property:Platform="Any CPU" -o publish
-wix.exe build -ext WixToolset.Netfx.wixext -o WhisperSpeechRecognition.msi Package.wxs
+dotnet.exe publish -c Release --property:Platform="Any CPU" -o "WixToolset\publish"
+wix.exe build -ext WixToolset.Netfx.wixext -o "WixToolset\WhisperSpeechRecognition.msi" "WixToolset\Package.wxs"
 ```
