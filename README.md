@@ -24,11 +24,3 @@ OpenAI を使用しているので API キーは https://platform.openai.com/api
 
 ## ライセンス
 アイコンは https://www.flaticon.com/free-icon/circle_14025057 より。ソースコードはMITライセンスです。
-
-## インストーラーの作成方法
-```
-wix.exe extension add -g WixToolset.Netfx.wixext/6.0.2
-
-dotnet.exe publish -c Release --property:Platform="Any CPU" --self-contained true -p:PublishSingleFile=true -o "WixToolset\publish"
-wix.exe build -ext WixToolset.Netfx.wixext -o "WixToolset\WhisperSpeechRecognition.msi" "WixToolset\Package.wxs"
-```

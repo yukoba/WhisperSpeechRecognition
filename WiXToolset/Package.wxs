@@ -1,4 +1,4 @@
-<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:netfx="http://wixtoolset.org/schemas/v4/wxs/netfx">
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Package Name="Whisper Speech Recognition" Manufacturer="YuKobayashi" Version="1.1.0.1" UpgradeCode="7C41BEBD-0763-4844-8F49-BF5995E1D816" Scope="perMachine">
     <MediaTemplate EmbedCab="yes" />
 
