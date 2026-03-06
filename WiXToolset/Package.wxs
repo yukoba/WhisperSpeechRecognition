@@ -5,18 +5,6 @@
     <!-- 古いバージョンの自動削除やダウングレード防止設定 -->
     <MajorUpgrade DowngradeErrorMessage="より新しいバージョンの Whisper Speech Recognition が既にインストールされています。" />
 
-    <!-- .NET 10 (Desktop Runtime x64) のインストール状態をチェック -->
-    <netfx:DotNetCompatibilityCheck
-        Property="DOTNET10STATUS"
-        RollForward="latestMajor"
-        RuntimeType="desktop"
-        Version="10.0.0"
-        Platform="x64" />
-
-    <!-- インストールされていない場合 (チェック結果が 0 以外の場合) にブロック -->
-    <Launch Condition="Installed OR DOTNET10STATUS = &quot;0&quot;"
-            Message="このアプリケーションをインストールするには、Microsoft .NET 10 Desktop Runtime (x64) が必要です。" />
-
     <StandardDirectory Id="ProgramFiles64Folder">
       <Directory Id="INSTALLFOLDER" Name="WhisperSpeechRecognition" />
     </StandardDirectory>
