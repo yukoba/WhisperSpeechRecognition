@@ -30,7 +30,7 @@ public class OpenAIService
             throw new InvalidOperationException(
                 "OpenAI APIキーが設定されていません。%USERPROFILE%\\WhisperSpeechRecognition.json または環境変数 OPENAI_API_KEY を確認してください。");
 
-        _audioClient = new AudioClient("whisper-1", _apiKey);
+        _audioClient = new AudioClient("gpt-4o-transcribe", _apiKey);
         _chatClient = new ChatClient("gpt-5-mini", _apiKey);
     }
 
