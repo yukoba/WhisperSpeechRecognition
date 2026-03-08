@@ -35,7 +35,7 @@ public class OpenAIService
     }
 
     /// <summary>
-    ///     WAVファイルをWhisper APIに送信して文字起こしを行う
+    ///     WAVファイルをOpenAI APIに送信して文字起こしを行う
     /// </summary>
     public async Task<string> TranscribeAudioAsync(string filePath)
     {
