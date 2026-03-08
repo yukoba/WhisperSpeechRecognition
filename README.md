@@ -1,6 +1,6 @@
 # Windows音声文字起こしアプリ
-OpenAI の gpt-4o-transcribe を使用して音声認識を行い、GPT-5 mini を使用して「えっと」などを除去して、クリップボードに認識結果をコピーします。
-GPT-5 mini を経由するので単純な音声認識ではなく、文章がきれいになります。gpt-4o-transcribe の料金は約1円/分です。
+Google の Gemini 3 Flash を使用して音声認識を行い、同時に「えっと」などの言い淀みを除去して、クリップボードに認識結果をコピーします。
+Gemini が調整するので、単純な音声認識ではなく、文章がきれいになります。API料金は約0.3円/分です。
 
 ## 使用方法
 インストールすると、スタートメニューに緑のマイクアイコンの Audio Transcription が追加になるので、起動すると、タスクトレイに常駐します。
@@ -17,8 +17,8 @@ OpenAI を使用しているので API キーは https://platform.openai.com/api
 
 ```json
 {
-	"OpenAI": {
-		"ApiKey": "sk-proj-AAAAAAAAA"
+	"Gemini": {
+		"ApiKey": "AAAAAAAAA"
 	}
 }
 ```

@@ -10,7 +10,7 @@ namespace AudioTranscription.Services;
 public class AppHotkeyManager : IDisposable
 {
     private readonly AudioRecorder _audioRecorder;
-    private readonly OpenAIService? _openAIService;
+    private readonly GeminiService? _geminiService;
     private bool _isRecording;
     private OverlayWindow? _overlay;
 
@@ -20,11 +20,11 @@ public class AppHotkeyManager : IDisposable
 
         try
         {
-            _openAIService = new OpenAIService();
+            _geminiService = new GeminiService();
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"OpenAI初期化エラー: {ex.Message}\n設定からAPIキーを確認してください。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show($"Gemini初期化エラー: {ex.Message}\n設定からAPIキーを確認してください。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         try
@@ -107,31 +107,27 @@ public class AppHotkeyManager : IDisposable
     {
         try
         {
-            if (_openAIService == null)
+            if (_geminiService == null)
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    MessageBox.Show("OpenAI APIが初期化されていません。APIキーを確認してください。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Gemini APIが初期化されていません。APIキーを確認してください。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
                 });
                 return;
             }
 
-            // 1. Whisper APIで文字起こし
+            // Gemini APIで文字起こしとフィラー除去を一括処理
             Application.Current.Dispatcher.Invoke(() => _overlay?.SetStatus("⏳ 文字起こし中..."));
-            var transcribedText = await _openAIService.TranscribeAudioAsync(wavFilePath);
+            var formattedText = await _geminiService.ProcessAudioAsync(wavFilePath);
 
-            if (string.IsNullOrWhiteSpace(transcribedText))
+            if (string.IsNullOrWhiteSpace(formattedText))
             {
                 Application.Current.Dispatcher.Invoke(() => _overlay?.SetStatus("⚠️ 音声が認識できませんでした"));
                 await Task.Delay(2000);
                 return;
             }
 
-            // 2. GPTモデルでフィラー除去・整形
-            Application.Current.Dispatcher.Invoke(() => _overlay?.SetStatus("⏳ テキスト整形中..."));
-            var formattedText = await _openAIService.RemoveFillersAndFormatTextAsync(transcribedText);
-
-            // 3. クリップボードへの設定 (STAスレッド制約のためDispatcherを使用)
+            // クリップボードへの設定 (STAスレッド制約のためDispatcherを使用)
             Application.Current.Dispatcher.Invoke(() =>
             {
                 if (!string.IsNullOrEmpty(formattedText))
