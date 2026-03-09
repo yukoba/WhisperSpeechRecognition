@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Threading;
 using AudioTranscription.Services;
 using H.NotifyIcon;
 using Application = System.Windows.Application;
@@ -26,23 +27,27 @@ public partial class App : Application
             return;
         }
 
-        // タスクトレイアイコンの初期化とViewModelのバインド
-        _trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-        if (_trayIcon != null)
+        // スタートメニューがすぐに閉じるように、重い処理は非同期で実行する
+        Dispatcher.BeginInvoke(new Action(() =>
         {
-            _trayIcon.DataContext = new TrayIconViewModel();
-            _trayIcon.ForceCreate();
-        }
+            // タスクトレイアイコンの初期化とViewModelのバインド
+            _trayIcon = (TaskbarIcon)FindResource("TrayIcon");
+            if (_trayIcon != null)
+            {
+                _trayIcon.DataContext = new TrayIconViewModel();
+                _trayIcon.ForceCreate();
+            }
 
-        // ホットキーマネージャーの初期化
-        _hotkeyManager = new AppHotkeyManager();
+            // ホットキーマネージャーの初期化
+            _hotkeyManager = new AppHotkeyManager();
 
-        // 起動時のWPF内部的な初期化処理が完全に落ち着くのを待ってからメモリを解放する
-        Task.Run(async () =>
-        {
-            await Task.Delay(2000); // 2秒待機
-            MemoryHelper.ReleaseMemory();
-        });
+            // 起動時のWPF内部的な初期化処理が完全に落ち着くのを待ってからメモリを解放する
+            Task.Run(async () =>
+            {
+                await Task.Delay(2000); // 2秒待機
+                MemoryHelper.ReleaseMemory();
+            });
+        }), DispatcherPriority.Background);
     }
 
     protected override void OnExit(ExitEventArgs e)
